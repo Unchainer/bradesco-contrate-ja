@@ -4,28 +4,32 @@ import { motion } from "framer-motion";
 
 const testimonials = [
   {
-    name: "Maria S.",
+    name: "Maria Souza",
     role: "Seguro Residencial",
-    text: "Atendimento excelente! Consegui o seguro da minha casa em menos de 24h. Super recomendo!",
+    city: "Vila Velha, ES",
+    text: "Contratei o seguro da minha casa com o Renifer e foi tudo muito rápido. Em menos de 24h já estava coberta. Atendimento nota 10!",
     stars: 5,
   },
   {
-    name: "Carlos R.",
+    name: "Carlos Roberto Lima",
     role: "Seguro Empresarial",
-    text: "Proteção completa para meu restaurante. O corretor entendeu exatamente o que eu precisava.",
+    city: "Vitória, ES",
+    text: "Proteção completa para meu restaurante. O Renifer entendeu exatamente o que eu precisava e encontrou o melhor custo-benefício.",
     stars: 5,
   },
   {
-    name: "Ana P.",
-    role: "Seguro Auto",
-    text: "Processo simples e rápido. Quando precisei da assistência, fui atendida na hora. Bradesco não decepciona!",
+    name: "Ana Paula Mendes",
+    role: "Seguro Automobilístico",
+    city: "Serra, ES",
+    text: "Processo simples e rápido. Quando precisei da assistência 24h, fui atendida na hora. Confio 100% no trabalho do Renifer!",
     stars: 5,
   },
   {
-    name: "Roberto M.",
+    name: "Roberto Machado",
     role: "Equipamentos de Trabalho",
-    text: "Segurei minhas ferramentas de trabalho e fico tranquilo sabendo que estão protegidas. Ótimo custo-benefício.",
-    stars: 4,
+    city: "Cariacica, ES",
+    text: "Segurei minhas ferramentas de trabalho e fico tranquilo sabendo que estão protegidas. O Renifer explicou tudo com paciência.",
+    stars: 5,
   },
 ];
 
@@ -62,7 +66,7 @@ const Testimonials = () => {
                     ))}
                   </div>
                   <p className="font-display font-bold text-sm text-foreground">{t.name}</p>
-                  <p className="text-xs text-muted-foreground">{t.role}</p>
+                  <p className="text-xs text-muted-foreground">{t.role} · {t.city}</p>
                 </CardContent>
               </Card>
             </motion.div>
