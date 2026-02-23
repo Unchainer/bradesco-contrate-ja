@@ -3,7 +3,7 @@ import { Menu, X, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 
-const WHATSAPP_URL = "https://wa.me/5500000000000?text=Olá! Gostaria de saber mais sobre seguros.";
+const WHATSAPP_URL = "https://wa.me/5527999759155?text=Olá! Gostaria de saber mais sobre seguros.";
 
 const navItems = [
   { label: "Início", href: "#inicio" },
@@ -21,8 +21,8 @@ const Header = () => {
         <a href="#inicio" className="flex items-center gap-2">
           <Shield className="h-8 w-8 text-primary" />
           <div>
-            <span className="font-display font-bold text-lg text-foreground leading-none block">Bradesco Seguros</span>
-            <span className="text-xs text-muted-foreground">Corretor Autorizado</span>
+            <span className="font-display font-bold text-lg text-foreground leading-none block">Renifer J. Ferreira</span>
+            <span className="text-xs text-muted-foreground">Corretor Bradesco Seguros</span>
           </div>
         </a>
 
