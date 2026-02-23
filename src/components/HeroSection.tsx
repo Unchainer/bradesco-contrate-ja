@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Shield, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
-const WHATSAPP_URL = "https://wa.me/5500000000000?text=Olá! Gostaria de uma cotação de seguro.";
+const WHATSAPP_URL = "https://wa.me/5527999759155?text=Olá! Gostaria de uma cotação de seguro.";
 
 const HeroSection = () => {
   return (
