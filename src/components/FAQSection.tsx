@@ -37,32 +37,50 @@ const faqs = [
 
 const FAQSection = () => {
   return (
-    <section id="duvidas" className="py-20 bg-secondary">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-14">
+    <section id="duvidas" className="py-24 bg-secondary relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,hsl(var(--primary)/0.05),transparent_60%)] pointer-events-none" />
+
+      <div className="container mx-auto px-4 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-14"
+        >
+          <span className="inline-block text-xs font-bold uppercase tracking-widest text-primary bg-accent px-4 py-1.5 rounded-full mb-4">
+            FAQ
+          </span>
           <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
             Dúvidas Frequentes
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Entenda os principais conceitos de seguros de forma simples e visual.
+            Entenda os principais conceitos de seguros de forma simples e direta.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {faqs.map((faq, i) => (
             <motion.div
               key={faq.question}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ delay: i * 0.08, duration: 0.45 }}
+              whileHover={{ y: -4, transition: { duration: 0.2 } }}
+              whileTap={{ scale: 0.97 }}
             >
-              <Card className="h-full hover:shadow-md transition-shadow">
+              <Card className="h-full hover:shadow-md hover:border-primary/20 transition-all duration-300 group">
                 <CardContent className="p-6">
-                  <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center mb-4">
-                    <faq.icon className="h-5 w-5 text-primary" />
-                  </div>
-                  <h3 className="font-display font-bold text-foreground mb-3">{faq.question}</h3>
+                  <motion.div
+                    className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center mb-4 group-hover:bg-primary transition-colors duration-300"
+                    whileHover={{ rotate: 10 }}
+                  >
+                    <faq.icon className="h-5 w-5 text-primary group-hover:text-primary-foreground transition-colors duration-300" />
+                  </motion.div>
+                  <h3 className="font-display font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-200">
+                    {faq.question}
+                  </h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
                 </CardContent>
               </Card>

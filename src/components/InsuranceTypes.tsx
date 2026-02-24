@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
-const WHATSAPP_URL = "https://wa.me/5500000000000?text=Olá! Tenho interesse no seguro: ";
+const WHATSAPP_URL = "https://wa.me/5527999759155?text=Olá! Tenho interesse no seguro: ";
 
 const insuranceTypes = [
   {
@@ -46,34 +46,53 @@ const insuranceTypes = [
 
 const InsuranceTypes = () => {
   return (
-    <section id="seguros" className="py-20 bg-secondary">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-14">
+    <section id="seguros" className="py-24 bg-secondary relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,hsl(var(--primary)/0.06),transparent_60%)] pointer-events-none" />
+
+      <div className="container mx-auto px-4 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-14"
+        >
+          <span className="inline-block text-xs font-bold uppercase tracking-widest text-primary bg-accent px-4 py-1.5 rounded-full mb-4">
+            Nossas Soluções
+          </span>
           <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
             Nossos Seguros
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Coberturas completas para cada necessidade. Escolha a proteção ideal e receba uma cotação personalizada.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {insuranceTypes.map((item, i) => (
             <motion.div
               key={item.title}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ delay: i * 0.1, duration: 0.45 }}
+              whileHover={{ y: -6, transition: { duration: 0.2 } }}
+              whileTap={{ scale: 0.97 }}
             >
-              <Card className="h-full hover:shadow-lg transition-shadow border-border/50 bg-card">
+              <Card className="h-full border-border/60 bg-card shadow-sm hover:shadow-lg transition-shadow duration-300 group overflow-hidden relative">
+                <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-primary to-primary/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <CardContent className="p-6 flex flex-col h-full">
-                  <div className="w-12 h-12 rounded-lg bg-accent flex items-center justify-center mb-4">
-                    <item.icon className="h-6 w-6 text-primary" />
-                  </div>
-                  <h3 className="font-display font-bold text-lg text-foreground mb-2">{item.title}</h3>
+                  <motion.div
+                    className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center mb-4 group-hover:bg-primary transition-colors duration-300"
+                    whileHover={{ rotate: [0, -10, 10, 0], transition: { duration: 0.4 } }}
+                  >
+                    <item.icon className="h-6 w-6 text-primary group-hover:text-primary-foreground transition-colors duration-300" />
+                  </motion.div>
+                  <h3 className="font-display font-bold text-lg text-foreground mb-2 group-hover:text-primary transition-colors duration-200">
+                    {item.title}
+                  </h3>
                   <p className="text-muted-foreground text-sm mb-4 flex-1">{item.description}</p>
-                  <Button asChild variant="outline" size="sm" className="w-full mt-auto">
+                  <Button asChild variant="outline" size="sm" className="w-full mt-auto group-hover:border-primary group-hover:text-primary transition-colors duration-200">
                     <a
                       href={`${WHATSAPP_URL}${encodeURIComponent(item.whatsappMsg)}`}
                       target="_blank"
