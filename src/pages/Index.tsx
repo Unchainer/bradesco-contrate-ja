@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
+import TrustBadges from "@/components/TrustBadges";
 import InsuranceTypes from "@/components/InsuranceTypes";
 import HowItWorks from "@/components/HowItWorks";
 import ImpactCounter from "@/components/ImpactCounter";
@@ -17,6 +18,7 @@ const Index = () => {
       <Header />
       <main>
         <HeroSection />
+        <TrustBadges />
         <InsuranceTypes />
         <HowItWorks />
         <ImpactCounter />
