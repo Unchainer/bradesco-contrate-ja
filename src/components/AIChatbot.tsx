@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, Bot, User } from "lucide-react";
+import { X, Send, Bot, User, MessageCircle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
@@ -9,8 +9,17 @@ type Msg = { role: "user" | "assistant"; content: string };
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
+const SUGGESTED_QUESTIONS = [
+  "O que é franquia?",
+  "Como acionar o seguro?",
+  "Quanto custa um seguro residencial?",
+  "Quais coberturas o seguro auto tem?",
+];
+
 const AIChatbot = () => {
   const [open, setOpen] = useState(false);
+  const [welcomed, setWelcomed] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([
     {
       role: "assistant",
@@ -22,15 +31,31 @@ const AIChatbot = () => {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Auto-open welcome popup after 5s
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!welcomed && !open) {
+        setShowWelcome(true);
+        setWelcomed(true);
+      }
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [welcomed, open]);
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const sendMessage = async () => {
-    const text = input.trim();
-    if (!text || isLoading) return;
+  const openChat = () => {
+    setShowWelcome(false);
+    setOpen(true);
+  };
 
-    const userMsg: Msg = { role: "user", content: text };
+  const sendMessage = async (text?: string) => {
+    const msgText = (text ?? input).trim();
+    if (!msgText || isLoading) return;
+
+    const userMsg: Msg = { role: "user", content: msgText };
     const newMessages = [...messages, userMsg];
     setMessages(newMessages);
     setInput("");
@@ -84,10 +109,7 @@ const AIChatbot = () => {
           if (line.startsWith(":") || line.trim() === "") continue;
           if (!line.startsWith("data: ")) continue;
           const jsonStr = line.slice(6).trim();
-          if (jsonStr === "[DONE]") {
-            streamDone = true;
-            break;
-          }
+          if (jsonStr === "[DONE]") { streamDone = true; break; }
           try {
             const parsed = JSON.parse(jsonStr);
             const content = parsed.choices?.[0]?.delta?.content as string | undefined;
@@ -99,7 +121,6 @@ const AIChatbot = () => {
         }
       }
 
-      // flush remaining
       if (textBuffer.trim()) {
         for (let raw of textBuffer.split("\n")) {
           if (!raw) continue;
@@ -131,7 +152,65 @@ const AIChatbot = () => {
 
   return (
     <>
-      {/* Chat toggle button - positioned above WhatsApp button */}
+      {/* Welcome popup */}
+      <AnimatePresence>
+        {showWelcome && !open && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            className="fixed bottom-24 right-6 z-50 w-[300px] max-w-[calc(100vw-3rem)] bg-card border border-border rounded-2xl shadow-2xl overflow-hidden"
+          >
+            <div className="gradient-bradesco px-4 py-3 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-4 w-4 text-primary-foreground" />
+                <span className="font-display font-bold text-sm text-primary-foreground">
+                  Assistente de Seguros
+                </span>
+              </div>
+              <button
+                onClick={() => setShowWelcome(false)}
+                className="text-primary-foreground/70 hover:text-primary-foreground transition-colors"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="p-4">
+              <p className="text-sm text-foreground mb-3 leading-snug">
+                Olá! 👋 Posso te ajudar com dúvidas sobre seguros. Experimente perguntar:
+              </p>
+              <div className="flex flex-col gap-2">
+                {SUGGESTED_QUESTIONS.map((q) => (
+                  <motion.button
+                    key={q}
+                    whileHover={{ x: 3 }}
+                    whileTap={{ scale: 0.97 }}
+                    onClick={() => {
+                      openChat();
+                      setTimeout(() => sendMessage(q), 150);
+                    }}
+                    className="text-left text-xs px-3 py-2 rounded-lg bg-accent text-accent-foreground hover:bg-primary hover:text-primary-foreground transition-colors font-medium"
+                  >
+                    {q}
+                  </motion.button>
+                ))}
+              </div>
+              <Button
+                size="sm"
+                className="w-full mt-3 font-display font-semibold text-xs"
+                onClick={openChat}
+              >
+                <MessageCircle className="h-3.5 w-3.5 mr-1.5" />
+                Abrir chat
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Chat toggle button */}
       <AnimatePresence>
         {!open && (
           <motion.button
@@ -139,8 +218,8 @@ const AIChatbot = () => {
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
             transition={{ type: "spring" }}
-            onClick={() => setOpen(true)}
-            className="fixed bottom-24 right-6 z-50 w-14 h-14 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg flex items-center justify-center transition-colors"
+            onClick={openChat}
+            className="fixed bottom-24 right-6 z-40 w-14 h-14 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg flex items-center justify-center transition-colors"
             aria-label="Abrir chat"
           >
             <Bot className="h-7 w-7" />
@@ -204,6 +283,25 @@ const AIChatbot = () => {
                   )}
                 </div>
               ))}
+
+              {/* Suggested questions (only at start) */}
+              {messages.length === 1 && !isLoading && (
+                <div className="flex flex-col gap-1.5 mt-2">
+                  <p className="text-xs text-muted-foreground mb-1">Perguntas frequentes:</p>
+                  {SUGGESTED_QUESTIONS.map((q) => (
+                    <motion.button
+                      key={q}
+                      whileHover={{ x: 2 }}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => sendMessage(q)}
+                      className="text-left text-xs px-3 py-2 rounded-lg bg-accent text-accent-foreground hover:bg-primary hover:text-primary-foreground transition-colors font-medium"
+                    >
+                      {q}
+                    </motion.button>
+                  ))}
+                </div>
+              )}
+
               {isLoading && messages[messages.length - 1]?.role === "user" && (
                 <div className="flex gap-2">
                   <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
@@ -220,10 +318,7 @@ const AIChatbot = () => {
             {/* Input */}
             <div className="p-3 border-t border-border">
               <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  sendMessage();
-                }}
+                onSubmit={(e) => { e.preventDefault(); sendMessage(); }}
                 className="flex gap-2"
               >
                 <Input
