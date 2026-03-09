@@ -56,6 +56,8 @@ const AIChatbot = () => {
     const msgText = (text ?? input).trim();
     if (!msgText || isLoading) return;
 
+    trackChatbotMessage();
+
     const userMsg: Msg = { role: "user", content: msgText };
     const newMessages = [...messages, userMsg];
     setMessages(newMessages);
