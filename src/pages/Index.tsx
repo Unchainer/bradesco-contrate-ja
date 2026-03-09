@@ -34,6 +34,7 @@ const Index = () => {
       <Footer />
       <AIChatbot />
       <FloatingQuoteForm />
+      <ScrollToTop />
       <WhatsAppButton />
     </div>
   );
