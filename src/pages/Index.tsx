@@ -30,6 +30,7 @@ const Index = () => {
       </main>
       <Footer />
       <AIChatbot />
+      <FloatingQuoteForm />
       <WhatsAppButton />
     </div>
   );
