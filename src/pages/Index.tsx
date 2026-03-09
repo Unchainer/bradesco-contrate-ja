@@ -22,6 +22,7 @@ const Index = () => {
         <HeroSection />
         <TrustBadges />
         <InsuranceTypes />
+        <InsuranceComparison />
         <HowItWorks />
         <ImpactCounter />
         <InsuranceGuide />
