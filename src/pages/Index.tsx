@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import TrustBadges from "@/components/TrustBadges";
 import InsuranceTypes from "@/components/InsuranceTypes";
+import InsuranceComparison from "@/components/InsuranceComparison";
 import HowItWorks from "@/components/HowItWorks";
 import ImpactCounter from "@/components/ImpactCounter";
 import InsuranceGuide from "@/components/InsuranceGuide";
@@ -21,6 +22,7 @@ const Index = () => {
         <HeroSection />
         <TrustBadges />
         <InsuranceTypes />
+        <InsuranceComparison />
         <HowItWorks />
         <ImpactCounter />
         <InsuranceGuide />

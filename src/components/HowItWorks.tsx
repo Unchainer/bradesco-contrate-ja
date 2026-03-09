@@ -26,7 +26,7 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section className="py-24 bg-background relative overflow-hidden">
+    <section id="como-funciona" className="py-24 bg-background relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,hsl(var(--primary)/0.05),transparent_60%)] pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
