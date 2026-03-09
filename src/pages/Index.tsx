@@ -13,6 +13,7 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import AIChatbot from "@/components/AIChatbot";
 import FloatingQuoteForm from "@/components/FloatingQuoteForm";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const Index = () => {
   return (
@@ -33,6 +34,7 @@ const Index = () => {
       <Footer />
       <AIChatbot />
       <FloatingQuoteForm />
+      <ScrollToTop />
       <WhatsAppButton />
     </div>
   );
