@@ -1,5 +1,6 @@
 import { Shield, Phone, Mail, MapPin, Instagram, Facebook, Linkedin, ExternalLink, MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const WHATSAPP_URL = "https://wa.me/5527999759155?text=Olá! Gostaria de saber mais sobre seguros.";
 
