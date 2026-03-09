@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from "react-markdown";
+import { trackChatbotMessage } from "@/lib/pixel";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
@@ -54,6 +55,8 @@ const AIChatbot = () => {
   const sendMessage = async (text?: string) => {
     const msgText = (text ?? input).trim();
     if (!msgText || isLoading) return;
+
+    trackChatbotMessage();
 
     const userMsg: Msg = { role: "user", content: msgText };
     const newMessages = [...messages, userMsg];

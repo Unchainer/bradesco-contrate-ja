@@ -1,5 +1,6 @@
 import { MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import { trackWhatsAppClick } from "@/lib/pixel";
 
 const WHATSAPP_URL = "https://wa.me/5527999759155?text=Olá! Gostaria de saber mais sobre seguros.";
 
@@ -9,6 +10,7 @@ const WhatsAppButton = () => {
       href={WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => trackWhatsAppClick("fab_button")}
       className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[hsl(142_70%_45%)] hover:bg-[hsl(142_70%_40%)] text-white shadow-lg flex items-center justify-center transition-colors"
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
