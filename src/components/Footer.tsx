@@ -1,5 +1,6 @@
 import { Shield, Phone, Mail, MapPin, Instagram, Facebook, Linkedin, ExternalLink, MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const WHATSAPP_URL = "https://wa.me/5527999759155?text=Olá! Gostaria de saber mais sobre seguros.";
 
@@ -212,22 +213,36 @@ const Footer = () => {
 
       {/* ── Bottom bar ── */}
       <div className="container mx-auto px-4 py-5">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-primary-foreground/40">
-          <div className="flex flex-col sm:flex-row items-center gap-x-4 gap-y-1 text-center">
-            <span>© {year} Renifer J. Ferreira — Corretor Bradesco Seguros. Todos os direitos reservados.</span>
-            <span className="hidden sm:block">·</span>
-            <span>CNPJ: 00.000.000/0001-00</span>
+        <div className="flex flex-col gap-3 text-xs text-primary-foreground/40">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-col sm:flex-row items-center gap-x-4 gap-y-1">
+              <span>© {year} Renifer J. Ferreira — Corretor Bradesco Seguros.</span>
+              <span className="hidden sm:block">·</span>
+              <span>CNPJ: 00.000.000/0001-00</span>
+            </div>
+            <div className="flex items-center gap-4">
+              <span>Corretor habilitado pela SUSEP</span>
+              <a
+                href="https://www2.susep.gov.br/safe/buscarCorretorForm.do"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 hover:text-primary-foreground/70 transition-colors"
+              >
+                Verificar SUSEP <ExternalLink className="h-3 w-3" />
+              </a>
+            </div>
           </div>
-          <div className="flex items-center gap-4">
-            <span>Corretor habilitado pela SUSEP</span>
-            <a
-              href="https://www2.susep.gov.br/safe/buscarCorretorForm.do"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 hover:text-primary-foreground/70 transition-colors"
-            >
-              Verificar SUSEP <ExternalLink className="h-3 w-3" />
-            </a>
+          {/* Legal links */}
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 pt-1 border-t border-primary-foreground/10">
+            <Link to="/politica-de-privacidade" className="hover:text-primary-foreground/70 transition-colors">
+              Política de Privacidade
+            </Link>
+            <span>·</span>
+            <Link to="/termos-de-uso" className="hover:text-primary-foreground/70 transition-colors">
+              Termos de Uso
+            </Link>
+            <span>·</span>
+            <span>As condições contratuais estão disponíveis na Bradesco Seguros S.A.</span>
           </div>
         </div>
       </div>
