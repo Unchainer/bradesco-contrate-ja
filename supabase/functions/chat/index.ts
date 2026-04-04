@@ -30,15 +30,45 @@ Regras:
 - Use português brasileiro informal mas profissional.
 - NÃO invente valores de prêmios, coberturas específicas ou percentuais. Diga que depende da análise individual.`;
 
+const MAX_MESSAGES = 20;
+const MAX_MESSAGE_LENGTH = 1000;
+
+function validateMessages(raw: unknown): { role: "user" | "assistant"; content: string }[] | null {
+  if (!Array.isArray(raw)) return null;
+  const filtered: { role: "user" | "assistant"; content: string }[] = [];
+  for (const msg of raw.slice(-MAX_MESSAGES)) {
+    if (typeof msg !== "object" || msg === null) return null;
+    const { role, content } = msg as Record<string, unknown>;
+    if (role !== "user" && role !== "assistant") continue; // strip system/tool roles
+    if (typeof content !== "string") return null;
+    filtered.push({ role, content: content.slice(0, MAX_MESSAGE_LENGTH) });
+  }
+  return filtered.length > 0 ? filtered : null;
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { messages } = await req.json();
+    const body = await req.json();
+    const messages = validateMessages(body?.messages);
+    if (!messages) {
+      return new Response(
+        JSON.stringify({ error: "Formato de mensagens inválido." }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
+    if (!LOVABLE_API_KEY) {
+      console.error("LOVABLE_API_KEY is not configured");
+      return new Response(
+        JSON.stringify({ error: "Erro interno. Tente novamente mais tarde." }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
 
     const response = await fetch(
       "https://ai.gateway.lovable.dev/v1/chat/completions",
@@ -86,7 +116,7 @@ serve(async (req) => {
   } catch (e) {
     console.error("chat error:", e);
     return new Response(
-      JSON.stringify({ error: e instanceof Error ? e.message : "Erro desconhecido" }),
+      JSON.stringify({ error: "Erro interno. Tente novamente mais tarde." }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
