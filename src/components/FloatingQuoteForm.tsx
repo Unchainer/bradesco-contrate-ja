@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "@/hooks/use-toast";
 import { trackQuoteSubmit, trackWhatsAppClick } from "@/lib/pixel";
+import { supabase } from "@/integrations/supabase/client";
 
 const INSURANCE_OPTIONS = [
   "Residencial",
@@ -48,18 +49,34 @@ const FloatingQuoteForm = () => {
     setDismissed(true);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [saving, setSaving] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !phone.trim() || !insuranceType) {
       toast({ title: "Preencha todos os campos", variant: "destructive" });
       return;
     }
+
+    setSaving(true);
+    try {
+      await supabase.from("leads").insert({
+        name: name.trim(),
+        phone: phone.trim(),
+        insurance_type: insuranceType,
+        source: "floating_form",
+      });
+    } catch {
+      // silently continue — WhatsApp redirect is the primary action
+    }
+
     const msg = encodeURIComponent(
       `Olá! Meu nome é ${name.trim()}, telefone ${phone.trim()}. Tenho interesse em Seguro ${insuranceType}. Pode me ajudar?`
     );
     trackQuoteSubmit(insuranceType);
     trackWhatsAppClick("floating_form");
     window.open(`https://wa.me/5527999759155?text=${msg}`, "_blank");
+    setSaving(false);
     setSubmitted(true);
     setTimeout(() => {
       setVisible(false);
