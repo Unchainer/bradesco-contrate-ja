@@ -205,6 +205,9 @@ const AdminDashboard = () => {
           </div>
         </div>
 
+        {/* Charts */}
+        <LeadCharts leads={filtered} />
+
         {/* Filters */}
         <div className="flex flex-col gap-3 mb-4">
           <div className="flex flex-col sm:flex-row gap-3">
