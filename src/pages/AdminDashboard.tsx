@@ -28,6 +28,7 @@ import { LogOut, Download, RefreshCw, Search, ShieldCheck, CalendarIcon, X } fro
 import { toast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { LeadCharts } from "@/components/admin/LeadCharts";
 
 type Lead = {
   id: string;
@@ -203,6 +204,9 @@ const AdminDashboard = () => {
             <p className="text-2xl font-display font-bold text-foreground">{filtered.length}</p>
           </div>
         </div>
+
+        {/* Charts */}
+        <LeadCharts leads={filtered} />
 
         {/* Filters */}
         <div className="flex flex-col gap-3 mb-4">
