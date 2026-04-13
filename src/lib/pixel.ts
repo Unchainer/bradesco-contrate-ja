@@ -1,7 +1,7 @@
 // Meta Pixel helper
 // Replace PLACEHOLDER_PIXEL_ID with your actual Pixel ID from Meta Business Suite
 // e.g. "1234567890123456"
-const PIXEL_ID = "PLACEHOLDER_PIXEL_ID";
+const PIXEL_ID = "1451979009669061";
 
 declare global {
   interface Window {
