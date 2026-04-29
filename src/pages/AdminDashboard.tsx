@@ -24,11 +24,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { LogOut, Download, RefreshCw, Search, ShieldCheck, CalendarIcon, X } from "lucide-react";
+import { LogOut, Download, RefreshCw, Search, ShieldCheck, CalendarIcon, X, Moon, Sun } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { LeadCharts } from "@/components/admin/LeadCharts";
+import { useAdminTheme } from "@/hooks/use-admin-theme";
 
 type Lead = {
   id: string;
@@ -49,6 +50,7 @@ const INSURANCE_TYPES = [
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
+  const { theme, toggle } = useAdminTheme();
   const [leads, setLeads] = useState<Lead[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -190,6 +192,8 @@ const AdminDashboard = () => {
             <LogOut className="h-4 w-4 mr-1.5" />
             Sair
           </Button>
+        </div>
+      </header>
         </div>
       </header>
 
