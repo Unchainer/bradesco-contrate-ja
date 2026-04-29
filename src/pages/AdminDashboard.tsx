@@ -188,12 +188,21 @@ const AdminDashboard = () => {
             <ShieldCheck className="h-6 w-6 text-primary" />
             <h1 className="font-display text-lg font-bold text-foreground">Painel de Leads</h1>
           </div>
-          <Button variant="outline" size="sm" onClick={handleLogout}>
-            <LogOut className="h-4 w-4 mr-1.5" />
-            Sair
-          </Button>
-        </div>
-      </header>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={toggle}
+              aria-label={theme === "dark" ? "Ativar modo claro" : "Ativar modo escuro"}
+              title={theme === "dark" ? "Modo claro" : "Modo escuro"}
+            >
+              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </Button>
+            <Button variant="outline" size="sm" onClick={handleLogout}>
+              <LogOut className="h-4 w-4 mr-1.5" />
+              Sair
+            </Button>
+          </div>
         </div>
       </header>
 
