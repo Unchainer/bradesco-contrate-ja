@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { X, Send, ChevronDown, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,6 +25,7 @@ const FloatingQuoteForm = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [insuranceType, setInsuranceType] = useState("");
+  const [consent, setConsent] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const triggered = useRef(false);
@@ -57,14 +59,23 @@ const FloatingQuoteForm = () => {
       toast({ title: "Preencha todos os campos", variant: "destructive" });
       return;
     }
+    if (!consent) {
+      toast({ title: "É necessário autorizar o tratamento dos dados (LGPD).", variant: "destructive" });
+      return;
+    }
 
     setSaving(true);
+    const consentText =
+      "Autorizo o tratamento dos meus dados pessoais (nome e telefone) para contato comercial sobre produtos de seguro, conforme a Política de Privacidade. Posso revogar este consentimento a qualquer momento.";
     try {
       await supabase.from("leads").insert({
         name: name.trim(),
         phone: phone.trim(),
         insurance_type: insuranceType,
         source: "floating_form",
+        consent_accepted: true,
+        consent_text: consentText,
+        consent_at: new Date().toISOString(),
       });
     } catch {
       // silently continue — WhatsApp redirect is the primary action
@@ -176,6 +187,21 @@ const FloatingQuoteForm = () => {
                           </option>
                         ))}
                       </select>
+                      <label className="flex items-start gap-2 text-[11px] text-muted-foreground leading-snug cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={consent}
+                          onChange={(e) => setConsent(e.target.checked)}
+                          className="mt-0.5 h-3.5 w-3.5 rounded border-input shrink-0"
+                        />
+                        <span>
+                          Autorizo contato comercial conforme a{" "}
+                          <Link to="/politica-de-privacidade" className="underline text-foreground">
+                            Política de Privacidade
+                          </Link>
+                          .
+                        </span>
+                      </label>
                       <Button
                         type="submit"
                         size="sm"

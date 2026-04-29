@@ -25,11 +25,11 @@ const sections = [
   },
   {
     title: "6. Seus direitos (LGPD)",
-    content: `Nos termos da LGPD, você tem direito a:\n\n• Confirmação da existência de tratamento;\n• Acesso aos dados;\n• Correção de dados incompletos, inexatos ou desatualizados;\n• Anonimização, bloqueio ou eliminação de dados desnecessários;\n• Portabilidade dos dados;\n• Eliminação dos dados tratados com consentimento;\n• Informação sobre compartilhamento;\n• Revogação do consentimento a qualquer momento.\n\nPara exercer seus direitos, entre em contato: contato@reniferferreira.com.br`,
+    content: `Nos termos da LGPD, você tem direito a:\n\n• Confirmação da existência de tratamento;\n• Acesso aos dados;\n• Correção de dados incompletos, inexatos ou desatualizados;\n• Anonimização, bloqueio ou eliminação de dados desnecessários;\n• Portabilidade dos dados;\n• Eliminação dos dados tratados com consentimento;\n• Informação sobre compartilhamento;\n• Revogação do consentimento a qualquer momento.\n\n**Exclusão automática (autoatendimento):** acesse [/privacidade/meus-dados](/privacidade/meus-dados) e informe seu telefone para que todos os seus leads sejam removidos imediatamente da nossa base.\n\nPara outros direitos, entre em contato: contato@reniferferreira.com.br`,
   },
   {
     title: "7. Retenção de dados",
-    content: `Os dados pessoais serão mantidos pelo período necessário para cumprir as finalidades para as quais foram coletados, observados os prazos legais aplicáveis ao setor de seguros (geralmente 5 anos após encerramento do relacionamento comercial, conforme normas da SUSEP).`,
+    content: `Leads capturados pelos formulários do site são automaticamente excluídos após **12 meses** da captura, salvo se houver relacionamento comercial em curso. Dados relacionados a contratos de seguro efetivados são mantidos pelos prazos exigidos pela SUSEP (em geral, 5 anos após o encerramento do relacionamento). Você também pode solicitar a exclusão antecipada a qualquer momento.`,
   },
   {
     title: "8. Cookies",
