@@ -242,6 +242,10 @@ const Footer = () => {
               Termos de Uso
             </Link>
             <span>·</span>
+            <Link to="/privacidade/meus-dados" className="hover:text-primary-foreground/70 transition-colors">
+              Excluir meus dados (LGPD)
+            </Link>
+            <span>·</span>
             <span>As condições contratuais estão disponíveis na Bradesco Seguros S.A.</span>
           </div>
         </div>
