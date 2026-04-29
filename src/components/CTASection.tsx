@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowRight, ShieldCheck, Send, CheckCircle } from "lucide-react";
@@ -21,6 +22,7 @@ const CTASection = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [insuranceType, setInsuranceType] = useState("");
+  const [consent, setConsent] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [saving, setSaving] = useState(false);
 
@@ -30,14 +32,23 @@ const CTASection = () => {
       toast({ title: "Preencha todos os campos", variant: "destructive" });
       return;
     }
+    if (!consent) {
+      toast({ title: "É necessário autorizar o tratamento dos dados (LGPD).", variant: "destructive" });
+      return;
+    }
 
     setSaving(true);
+    const consentText =
+      "Autorizo o tratamento dos meus dados pessoais (nome e telefone) para contato comercial sobre produtos de seguro, conforme a Política de Privacidade. Posso revogar este consentimento a qualquer momento.";
     try {
       await supabase.from("leads").insert({
         name: name.trim(),
         phone: phone.trim(),
         insurance_type: insuranceType,
         source: "cta_form",
+        consent_accepted: true,
+        consent_text: consentText,
+        consent_at: new Date().toISOString(),
       });
     } catch {
       // silently continue — WhatsApp redirect is the primary action
@@ -54,6 +65,7 @@ const CTASection = () => {
       setName("");
       setPhone("");
       setInsuranceType("");
+      setConsent(false);
     }, 4000);
   };
 
@@ -124,6 +136,21 @@ const CTASection = () => {
                       <option key={opt} value={opt}>{opt}</option>
                     ))}
                   </select>
+                  <label className="flex items-start gap-2 text-xs text-primary-foreground/90 leading-snug cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={consent}
+                      onChange={(e) => setConsent(e.target.checked)}
+                      className="mt-0.5 h-4 w-4 rounded border-primary-foreground/40 accent-primary-foreground shrink-0"
+                    />
+                    <span>
+                      Autorizo o uso dos meus dados para contato comercial, conforme a{" "}
+                      <Link to="/politica-de-privacidade" className="underline font-semibold">
+                        Política de Privacidade
+                      </Link>
+                      .
+                    </span>
+                  </label>
                   <Button
                     type="submit"
                     size="lg"

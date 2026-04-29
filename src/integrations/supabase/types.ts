@@ -14,9 +14,46 @@ export type Database = {
   }
   public: {
     Tables: {
-      leads: {
+      data_deletion_requests: {
         Row: {
           created_at: string
+          id: string
+          leads_deleted: number
+          notes: string | null
+          phone: string
+          processed_at: string | null
+          requester_email: string | null
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          leads_deleted?: number
+          notes?: string | null
+          phone: string
+          processed_at?: string | null
+          requester_email?: string | null
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          leads_deleted?: number
+          notes?: string | null
+          phone?: string
+          processed_at?: string | null
+          requester_email?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
+      leads: {
+        Row: {
+          consent_accepted: boolean
+          consent_at: string | null
+          consent_text: string | null
+          created_at: string
+          expires_at: string
           id: string
           insurance_type: string
           name: string
@@ -24,7 +61,11 @@ export type Database = {
           source: string | null
         }
         Insert: {
+          consent_accepted?: boolean
+          consent_at?: string | null
+          consent_text?: string | null
           created_at?: string
+          expires_at?: string
           id?: string
           insurance_type: string
           name: string
@@ -32,7 +73,11 @@ export type Database = {
           source?: string | null
         }
         Update: {
+          consent_accepted?: boolean
+          consent_at?: string | null
+          consent_text?: string | null
           created_at?: string
+          expires_at?: string
           id?: string
           insurance_type?: string
           name?: string
@@ -46,7 +91,11 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      purge_expired_leads: { Args: never; Returns: number }
+      request_lead_deletion: {
+        Args: { _email?: string; _phone: string }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never
